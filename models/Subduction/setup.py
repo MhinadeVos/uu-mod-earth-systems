@@ -105,7 +105,7 @@ def initialize_markers(markers, materials, params, xsize, ysize):
             dtdy = 0.5/1000 # K/m
             markers.T[mm] = params.T_bot - dtdy*(ysize - markers.y[mm])
             
-            # if in the air
+            # Put in the air a constant temperature
             if (markers.id[mm]==0):
                 # cons T
                 markers.T[mm] = params.T_top
@@ -212,7 +212,7 @@ def initializeModel():
 
     # additional model options 
     # initial system size
-    xsize0 = 760000      #600000    
+    xsize0 = 760000     
     ysize0 = 200000
     
     xsize = xsize0
@@ -258,7 +258,7 @@ def initializeModel():
     B_intern[0] = 99  
     B_intern[1] = 20
     B_intern[2] = 23
-    B_intern[3] = (-7.5*1e-2)/(365.25*24*3600)  # convert to m/s
+    B_intern[3] = (-7.5*1e-2)/(365.25*24*3600)  # Push velocity convert to m/s
     B_intern[4] = -1 
     B_intern[5] = 0
     B_intern[6] = 0

@@ -176,14 +176,11 @@ def gridSpacings(bx, by, Nx, Ny, non_uni_xsize, xsize, ysize, grid, t_curr):
         # set the points in the high res area
         # this only needs doing on the initial setup
         grid.x[Nx] = non_uni_xsize 
-        for i in range(Nx+1,104-Nx):  #xnum
+        for i in range(Nx+1,104-Nx):  #Used to be xnum instead of 104
             grid.x[i] = grid.x[i-1] + bx
             
         # size of the non-uniform region 
-        D = xsize_norm - grid.x[104-Nx-1] #xsize, xnum
-        #print(grid.x[Nx+1])
-        #print(grid.x[104-Nx-1])
-        #print('D = ', D)
+        D = xsize_norm - grid.x[104-Nx-1] #xsize, xnum #Used to be xnum instead of 104 and xsize instead of xsize_norm
 
     else:
         # set the new position of the first node,
@@ -201,14 +198,14 @@ def gridSpacings(bx, by, Nx, Ny, non_uni_xsize, xsize, ysize, grid, t_curr):
             F = (1 + D/bx*(1 - 1/F))**(1/Nx)
     
         # define grid points to the right of the high-res region
-        for i in range(104-Nx, 104):   #was xnum
-            grid.x[i] = grid.x[i-1] + bx*F**(i-(104-Nx-1))
-        for i in range(104, xnum):
+        for i in range(104-Nx, 104):   #Used to be xnum instead of 104
+            grid.x[i] = grid.x[i-1] + bx*F**(i-(104-Nx-1)) #Used to be xnum instead of 104
+        for i in range(104, xnum): #Add the four remaining grid points with equal spacing of 40km
             grid.x[i] = grid.x[i-1] + 40e3
         
         if (t_curr==0):
-            grid.x[xnum-1] = xsize
-            grid.x[104-1] = xsize_norm
+            grid.x[xnum-1] = xsize #Gridsize with the extra 4 points added
+            grid.x[104-1] = xsize_norm #Gridsize without the extra 4 points
     
         # now do the same going leftward
         D = grid.x[Nx] - grid.x[0] # think this should still work for inital case?
@@ -222,7 +219,6 @@ def gridSpacings(bx, by, Nx, Ny, non_uni_xsize, xsize, ysize, grid, t_curr):
             grid.x[i] = grid.x[i-1] + bx*F**(Nx+1-i)
         
     
-    #print(grid.x)    
     ###########################################################################
     # Vertical grid
 
